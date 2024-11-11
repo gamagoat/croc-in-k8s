@@ -1,0 +1,21 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Timoni
+        uses: stefanprodan/timoni/actions/setup@main
+        with:
+          version: latest
+      - name: Vet module
+        run: timoni mod vet croc
+      - name: Build module
+        run: timoni build relay croc -n croc
